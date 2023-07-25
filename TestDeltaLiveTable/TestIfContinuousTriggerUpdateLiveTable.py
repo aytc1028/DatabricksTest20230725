@@ -33,10 +33,11 @@ silver_path = f"abfss://silver@test202306262243.dfs.core.windows.net/{src_table}
     path=f"{bronze_path}"
 )
 def bronze_dummy():
-    return
-    spark.read.format("parquet").load(source_path) \
+    return (
+        spark.read.format("parquet").load(source_path) \
         .withColumn("elt_timestamp", f.current_timestamp()) \
         .withColumn("data_source", f.input_file_name())
+    )
 
 # COMMAND ----------
 
@@ -45,7 +46,8 @@ def bronze_dummy():
     path=f"{silver_path}"
 )
 def silver_dummy():
-    return
-    dlt.read(f"bronze_{src_table}") \
+    return (
+        dlt.read(f"bronze_{src_table}") \
         .withColumn("layer", f.lit("silver")) \
         .withColumn("elt_timestamp",f.current_timestamp())
+    )
