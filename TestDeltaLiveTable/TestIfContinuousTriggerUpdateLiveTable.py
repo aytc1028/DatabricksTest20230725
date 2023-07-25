@@ -21,6 +21,10 @@ from pyspark.sql import functions as f
 
 # COMMAND ----------
 
+spark.conf.set("spark.databricks.delta.schema.autoMerge",True)
+
+# COMMAND ----------
+
 src_table = "dummy"
 source_path = f"abfss://others@test202306262243.dfs.core.windows.net/{src_table}/"
 bronze_path = f"abfss://bronze@test202306262243.dfs.core.windows.net/{src_table}/"
